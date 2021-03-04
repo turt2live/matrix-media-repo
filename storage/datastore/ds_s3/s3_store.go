@@ -25,7 +25,7 @@ type s3Datastore struct {
 	dsId     string
 	client   *minio.Client
 	bucket   string
-	region string
+	region   string
 	tempPath string
 }
 
@@ -70,7 +70,7 @@ func GetOrCreateS3Datastore(dsId string, conf config.DatastoreConfig) (*s3Datast
 		dsId:     dsId,
 		client:   s3client,
 		bucket:   bucket,
-		region: region,
+		region:   region,
 		tempPath: tempPath,
 	}
 	stores[dsId] = s3ds

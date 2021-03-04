@@ -77,6 +77,26 @@ func LoadDatastores() {
 			if err != nil {
 				logrus.Warn("\t\tTemporary path does not exist!")
 			}
+		} else if ds.Type == "gcp" {
+			conf, err := datastore.GetDatastoreConfig(ds)
+			if err != nil {
+				continue
+			}
+
+			gcp, err := ds_s3.GetOrCreateGCPDatastore(ds.DatastoreId, conf)
+			if err != nil {
+				continue
+			}
+
+			err = gcp.EnsureBucketExists()
+			if err != nil {
+				logrus.Warn("\t\tBucket does not exist!")
+			}
+
+			err = gcp.EnsureTempPathExists()
+			if err != nil {
+				logrus.Warn("\t\tTemporary path does not exist!")
+			}
 		}
 	}
 }
